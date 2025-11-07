@@ -6,7 +6,7 @@ type Props = {
   id?: string;
 };
 
-export default function AnimationBox1({ children, id = "box-1" }: Props) {
+export default function HeroAnimation({ children, id = "box-1" }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const prevScrollRef = useRef<number>(0);
@@ -101,7 +101,7 @@ export default function AnimationBox1({ children, id = "box-1" }: Props) {
     setCanvasSize();
     window.addEventListener("resize", setCanvasSize);
 
-    const frameCount = 31;
+    const frameCount = 30;
     const currentFrame = (i: number) => images[i.toString().padStart(5, "0")];
 
     const frames: HTMLImageElement[] = [];
@@ -326,9 +326,8 @@ export default function AnimationBox1({ children, id = "box-1" }: Props) {
   return (
     <section
       id={id}
-      className="w-[45vw] h-[80vh] rounded-xl shadow-lg bg-white overflow-hidden p-6 relative flex items-center justify-center"
+      className="w-[45vw] h-[80vh] overflow-hidden p-6 relative flex items-center justify-center"
     >
-      <h2 className="absolute top-4 left-4 m-0 text-lg font-bold">Caja 1</h2>
       <canvas
         ref={canvasRef}
         id="hero-lightpass"
@@ -336,13 +335,6 @@ export default function AnimationBox1({ children, id = "box-1" }: Props) {
         role="img"
         aria-label="Hero animation sequence"
       />
-      <div
-        className={`absolute bottom-4 text-sm text-gray-500 transition-all duration-500 ${
-          started ? "opacity-0 translate-y-2" : "opacity-100"
-        }`}
-      >
-        Keep scrolling
-      </div>
       {children}
     </section>
   );
