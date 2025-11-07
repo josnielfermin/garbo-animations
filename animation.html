@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="hero-lightpass" />
+    <style>
+      html {
+        height: 100vh;
+      }
+
+      body {
+        height: 500vh;
+        background: #000;
+      }
+
+      canvas {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 100vw;
+        max-height: 100vh;
+      }
+    </style>
+
+    <script>
+      const images = {
+        '00029':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/5d3ddafd-e969-444e-ab5b-772ce2ec09e7/hero-s_00029.png',
+        '00000':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/e4883be1-d4aa-42a9-b710-dd2a3c53d3ee/hero-s_00000.png',
+        '00001':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/0b9f2201-1bc2-4a58-8c99-73078de2fefc/hero-s_00001.png',
+        '00002':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/0a2a29aa-a73f-4c9d-810b-bdf1776db0f1/hero-s_00002.png',
+        '00003':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/1f97d951-3b79-4237-9f6c-c1ac86492463/hero-s_00003.png',
+        '00004':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/3d2a8c5b-7771-4de2-9461-c34ab0d4e649/hero-s_00004.png',
+        '00005':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/a502e671-4544-46c6-bba0-534ad3b618a2/hero-s_00005.png',
+        '00006':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/337ca065-cb3f-4949-8936-23cc1c2970a7/hero-s_00006.png',
+        '00007':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/53f4778b-85ee-4107-907f-b85b4515e0d0/hero-s_00007.png',
+        '00008':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/41577e33-2f54-44bc-9841-6d57faef8bfc/hero-s_00008.png',
+        '00009':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/37e22b8f-d7ae-44af-9ce9-7ab44e988465/hero-s_00009.png',
+        '00010':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/db6f9eae-cf73-43f2-93dd-02d57d955b73/hero-s_00010.png',
+        '00011':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/76533e94-9f0e-4222-aad5-e5dcf3aff594/hero-s_00011.png',
+        '00012':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/cb01d152-22d0-4ea8-81e3-28d0a4d87da1/hero-s_00012.png',
+        '00013':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/d8594bb8-ef52-430f-91cb-842b7692e08a/hero-s_00013.png',
+        '00014':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/8f5c66e2-144f-4425-91fd-1f82d031b972/hero-s_00014.png',
+        '00015':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/5942e887-45aa-4b77-8265-23d62f58b571/hero-s_00015.png',
+        '00016':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/034993b5-873c-45a5-af92-a36cff4ad9d4/hero-s_00016.png',
+        '00017':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/9f3a5752-12ee-42dc-9715-2210e8f57a73/hero-s_00017.png',
+        '00018':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/a258bb43-cf04-4705-86b1-d1946196bb28/hero-s_00018.png',
+        '00019':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/02e0ce79-0324-4c53-9afa-6c4ed6a18379/hero-s_00019.png',
+        '00020':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/05f07542-6de6-4cda-8bbe-a44f136ed455/hero-s_00020.png',
+        '00021':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/36aab125-21fd-45c7-a2bc-7ae2367dee80/hero-s_00021.png',
+        '00022':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/a4d1d146-a2c0-4712-9f9a-6c0ca1e436a8/hero-s_00022.png',
+        '00023':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/07340771-fcaa-4b9f-99f3-8fff8c929550/hero-s_00023.png',
+        '00024':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/3e8045e0-0006-4ea0-bd76-ca39532a802e/hero-s_00024.png',
+        '00025':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/0ed7da6a-b6ac-41e8-ac29-91e547982232/hero-s_00025.png',
+        '00026':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/b6a0aaf7-8783-445c-b02f-2a815c2ee4c7/hero-s_00026.png',
+        '00027':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/a27149c7-dd74-4c70-9837-2a8ac09295e5/hero-s_00027.png',
+        '00028':
+          'https://t9015398243.p.clickup-attachments.com/t9015398243/6047147a-a275-4f3b-a044-17e7758c5a41/hero-s_00028.png',
+      };
+
+      const html = document.documentElement;
+      const canvas = document.getElementById('hero-lightpass');
+      const context = canvas.getContext('2d');
+
+      const frameCount = 30;
+      // const currentFrame = (index) =>
+      //   `https://t9015398243.p.clickup-attachments.com/t9015398243/67cc5b25-233d-4e7a-a574-a56237b7aeb5/hero-s.${index.toString().padStart(4, '0')}.png`
+      const currentFrame = (i) => images[i.toString().padStart(5, '0')];
+
+      const preloadImages = () => {
+        for (let i = 1; i < frameCount; i++) {
+          const img = new Image();
+          img.src = currentFrame(i);
+        }
+      };
+
+      const img = new Image();
+      img.src = currentFrame(1);
+      canvas.width = 1158;
+      canvas.height = 770;
+      img.onload = function () {
+        context.drawImage(img, 0, 0);
+      };
+
+      const updateImage = (index) => {
+        img.src = currentFrame(index);
+        // context.fillStyle = 'black'
+        // context.fillRect(0, 0, canvas.width, canvas.height)
+        context.drawImage(img, 0, 0);
+      };
+
+      // Easing function for ease-out
+      function easeOutQuad(t) {
+        return t * (2 - t);
+      }
+
+      let targetFrame = 1;
+      let currentFrameIndex = 1;
+      let animating = false;
+
+      function animateFrame() {
+        if (!animating) return;
+        // Move towards targetFrame with easing
+        currentFrameIndex += (targetFrame - currentFrameIndex) * 0.2;
+        const displayFrame = Math.round(currentFrameIndex);
+        updateImage(displayFrame);
+        if (Math.abs(targetFrame - currentFrameIndex) > 0.01) {
+          requestAnimationFrame(animateFrame);
+        } else {
+          currentFrameIndex = targetFrame;
+          updateImage(Math.round(currentFrameIndex));
+          animating = false;
+        }
+      }
+
+      window.addEventListener('scroll', () => {
+        const scrollTop = html.scrollTop * 20;
+        const maxScrollTop = html.scrollHeight - window.innerHeight;
+        let scrollFraction = scrollTop / maxScrollTop;
+        scrollFraction = Math.min(1, Math.max(0, scrollFraction));
+        // Apply easeOut to scrollFraction
+        const eased = easeOutQuad(scrollFraction);
+        targetFrame = 1 + Math.round((frameCount - 1) * eased);
+        if (!animating) {
+          animating = true;
+          animateFrame();
+        }
+      });
+
+      preloadImages();
+    </script>
+  </body>
+</html>
